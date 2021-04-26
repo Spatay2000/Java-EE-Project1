@@ -1,4 +1,8 @@
-package dl.iitu.kz;
+package dl.iitu.kz.servlet;
+import dl.iitu.kz.dao.Product;
+import dl.iitu.kz.utils.DBUtils;
+import dl.iitu.kz.utils.MyUtils;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -9,29 +13,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-@WebServlet(urlPatterns = { "/createProduct" })
-public class CreateProductServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/doCreateProduct" })
+public class DoCreateProductServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    public CreateProductServlet() {
+    public DoCreateProductServlet() {
         super();
     }
 
-    // Show product creation page.
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        RequestDispatcher dispatcher = request.getServletContext()
-                .getRequestDispatcher("/createProductView.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    // When the user enters the product information, and click Submit.
-    // This method will be called.
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Connection conn = MyUtils.getStoredConnection(request);
 
@@ -71,14 +62,23 @@ public class CreateProductServlet extends HttpServlet {
         // If error, forward to Edit page.
         if (errorString != null) {
             RequestDispatcher dispatcher = request.getServletContext()
-                    .getRequestDispatcher("/createProductView.jsp");
+                    .getRequestDispatcher("/WEB-INF/views/createProductView.jsp");
             dispatcher.forward(request, response);
+
         }
+
         // If everything nice.
         // Redirect to the product listing page.
         else {
             response.sendRedirect(request.getContextPath() + "/productList");
         }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 
 }

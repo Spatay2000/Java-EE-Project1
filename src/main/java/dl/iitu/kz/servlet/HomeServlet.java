@@ -1,4 +1,4 @@
-package dl.iitu.kz;
+package dl.iitu.kz.servlet;
 
 import java.io.IOException;
 

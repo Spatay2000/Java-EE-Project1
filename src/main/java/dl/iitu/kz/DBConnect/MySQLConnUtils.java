@@ -1,11 +1,11 @@
-package dl.iitu.kz;
+package dl.iitu.kz.DBConnect;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 public class MySQLConnUtils {
     public static Connection getMySQLConnection()
             throws ClassNotFoundException, SQLException {
-        // Note: Change the connection parameters accordingly.
+
         String hostName = "localhost";
         String dbName = "mydata";
         String userName = "root";
@@ -19,9 +19,7 @@ public class MySQLConnUtils {
 
         Class.forName("com.mysql.jdbc.Driver");
 
-        // URL Connection for MySQL:
-        // Example:
-        // jdbc:mysql://localhost:3306/simplehr
+
         String connectionURL = "jdbc:mysql://" + hostName + ":3306/" + dbName;
 
         Connection conn = DriverManager.getConnection(connectionURL, userName,

@@ -1,4 +1,4 @@
-package dl.iitu.kz;
+package dl.iitu.kz.filter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Collection;

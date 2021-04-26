@@ -1,4 +1,8 @@
-package dl.iitu.kz;
+package dl.iitu.kz.filter;
+
+import dl.iitu.kz.DBConnect.ConnectionUtils;
+import dl.iitu.kz.utils.MyUtils;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.Collection;
@@ -29,6 +33,7 @@ public class JDBCFilter implements Filter {
 
     }
 
+
     // Check the target of the request is a servlet?
     private boolean needJDBC(HttpServletRequest request) {
         System.out.println("JDBC Filter");
@@ -52,7 +57,8 @@ public class JDBCFilter implements Filter {
         Map<String, ? extends ServletRegistration> servletRegistrations = request.getServletContext()
                 .getServletRegistrations();
 
-        // Collection of all servlet in your Webapp.
+
+        // Collection of all servlet in your webapp.
         Collection<? extends ServletRegistration> values = servletRegistrations.values();
         for (ServletRegistration sr : values) {
             Collection<String> mappings = sr.getMappings();
@@ -69,31 +75,26 @@ public class JDBCFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
-        // Only open connections for the special requests.
-        // (For example, the path to the servlet, JSP, ..)
-        //
-        // Avoid open connection for commons request.
-        // (For example: image, css, javascript,... )
-        //
+
+
         if (this.needJDBC(req)) {
 
             System.out.println("Open Connection for: " + req.getServletPath());
 
             Connection conn = null;
             try {
-                // Create a Connection.
+
                 conn = ConnectionUtils.getConnection();
-                // Set outo commit to false.
+
+
                 conn.setAutoCommit(false);
 
-                // Store Connection object in attribute of request.
+
                 MyUtils.storeConnection(request, conn);
 
-                // Allow request to go forward
-                // (Go to the next filter or target)
                 chain.doFilter(request, response);
 
-                // Invoke the commit() method to complete the transaction with the DB.
+
                 conn.commit();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -103,11 +104,10 @@ public class JDBCFilter implements Filter {
                 ConnectionUtils.closeQuietly(conn);
             }
         }
-        // With commons requests (images, css, html, ..)
-        // No need to open the connection.
+
         else {
-            // Allow request to go forward
-            // (Go to the next filter or target)
+
+
             chain.doFilter(request, response);
         }
 

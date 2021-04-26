@@ -1,4 +1,6 @@
-package dl.iitu.kz;
+package dl.iitu.kz.utils;
+import dl.iitu.kz.dao.UserAccount;
+
 import java.sql.Connection;
 
 import javax.servlet.ServletRequest;

@@ -13,7 +13,7 @@
 
 <h3>Home Page</h3>
 
-This is demo Simple web application using jsp,servlet &amp; Jdbc. <br><br>
+This is  Simple web application using jsp,servlet &amp; Jdbc. <br><br>
 <b>It includes the following functions:</b>
 <ul>
     <% out.print("Today is:"+java.util.Calendar.getInstance().getTime()); %>

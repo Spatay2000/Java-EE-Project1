@@ -1,4 +1,8 @@
-package dl.iitu.kz;
+package dl.iitu.kz.servlet;
+import dl.iitu.kz.dao.UserAccount;
+import dl.iitu.kz.utils.DBUtils;
+import dl.iitu.kz.utils.MyUtils;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
